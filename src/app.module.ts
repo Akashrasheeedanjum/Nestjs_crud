@@ -7,12 +7,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }), // makes env variables available
+    ConfigModule.forRoot({ isGlobal: true }), // loads env variables from Railway
     CarModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGO_URI'),
+        uri: configService.get<string>('MONGO_URI'), // reads Railway env var
       }),
       inject: [ConfigService],
     }),
